@@ -1,5 +1,8 @@
 overwrite: true
-schema: "https://api.github.com/graphl/"
+schema: 
+  - https://api.github.com/graphql:
+      headers:
+        Authorization: "bearer GITHUBTOKEN"
 documents: "./src/components/**/*.{ts,tsx}"
 generates:
   src/generated/graphql.tsx:
