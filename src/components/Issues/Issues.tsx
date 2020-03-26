@@ -1,6 +1,9 @@
 import React from 'react'
 import { IssueListQuery } from '../../generated/graphql'
 
+
+
+
 interface Props {
     data: IssueListQuery
 }
@@ -11,7 +14,7 @@ const Issues = ({data}: Props) => {
         <div className={className}>
             <h3>Issues</h3>
             <ul>
-                {data.repository?.issues && data.repository?.issues.nodes?.map((node, i)=>(<li key={i}>{node?.title}</li>))}
+                {data.repository?.issues && data.repository?.issues.nodes?.map((node, i)=>(<li key={i} >{node?.title}</li>))}
 
             </ul>
         </div>

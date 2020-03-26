@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export const QUERY_ISSUES = gql`
-  query IssueList{
+  query IssueList($repo: String!, $owner: String!){
 
-    repository(name: "JobApplications", owner: "jrgiant") {
+    repository(name: $repo, owner: $owner) {
       issues(first: 100, orderBy: {field: CREATED_AT, direction: ASC}) {
         nodes {
           id

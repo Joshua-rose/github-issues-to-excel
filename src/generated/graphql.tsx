@@ -11430,7 +11430,10 @@ export type ViewerHovercardContext = HovercardContext & {
 };
 
 
-export type IssueListQueryVariables = {};
+export type IssueListQueryVariables = {
+  repo: Scalars['String'];
+  owner: Scalars['String'];
+};
 
 
 export type IssueListQuery = (
@@ -11458,10 +11461,47 @@ export type IssueListQuery = (
   )> }
 );
 
+export type RepoListQueryVariables = {
+  login: Scalars['String'];
+};
+
+
+export type RepoListQuery = (
+  { __typename?: 'Query' }
+  & { user?: Maybe<(
+    { __typename?: 'User' }
+    & { repositories: (
+      { __typename?: 'RepositoryConnection' }
+      & { nodes?: Maybe<Array<Maybe<(
+        { __typename?: 'Repository' }
+        & Pick<Repository, 'name'>
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ) }
+      )>>> }
+    ) }
+  )> }
+);
+
+export type LoginQueryVariables = {};
+
+
+export type LoginQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'login'>
+  ) }
+);
+
 
 export const IssueListDocument = gql`
-    query IssueList {
-  repository(name: "JobApplications", owner: "jrgiant") {
+    query IssueList($repo: String!, $owner: String!) {
+  repository(name: $repo, owner: $owner) {
     issues(first: 100, orderBy: {field: CREATED_AT, direction: ASC}) {
       nodes {
         id
@@ -11487,7 +11527,7 @@ export const IssueListDocument = gql`
   }
 }
     `;
-export type IssueListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<IssueListQuery, IssueListQueryVariables>, 'query'>;
+export type IssueListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<IssueListQuery, IssueListQueryVariables>, 'query'> & ({ variables: IssueListQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const IssueListComponent = (props: IssueListComponentProps) => (
       <ApolloReactComponents.Query<IssueListQuery, IssueListQueryVariables> query={IssueListDocument} {...props} />
@@ -11517,6 +11557,8 @@ export function withIssueList<TProps, TChildProps = {}>(operationOptions?: Apoll
  * @example
  * const { data, loading, error } = useIssueListQuery({
  *   variables: {
+ *      repo: // value for 'repo'
+ *      owner: // value for 'owner'
  *   },
  * });
  */
@@ -11529,3 +11571,109 @@ export function useIssueListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type IssueListQueryHookResult = ReturnType<typeof useIssueListQuery>;
 export type IssueListLazyQueryHookResult = ReturnType<typeof useIssueListLazyQuery>;
 export type IssueListQueryResult = ApolloReactCommon.QueryResult<IssueListQuery, IssueListQueryVariables>;
+export const RepoListDocument = gql`
+    query RepoList($login: String!) {
+  user(login: $login) {
+    repositories(first: 100) {
+      nodes {
+        name
+        owner {
+          login
+        }
+      }
+    }
+  }
+}
+    `;
+export type RepoListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<RepoListQuery, RepoListQueryVariables>, 'query'> & ({ variables: RepoListQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const RepoListComponent = (props: RepoListComponentProps) => (
+      <ApolloReactComponents.Query<RepoListQuery, RepoListQueryVariables> query={RepoListDocument} {...props} />
+    );
+    
+export type RepoListProps<TChildProps = {}> = ApolloReactHoc.DataProps<RepoListQuery, RepoListQueryVariables> & TChildProps;
+export function withRepoList<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  RepoListQuery,
+  RepoListQueryVariables,
+  RepoListProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, RepoListQuery, RepoListQueryVariables, RepoListProps<TChildProps>>(RepoListDocument, {
+      alias: 'repoList',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useRepoListQuery__
+ *
+ * To run a query within a React component, call `useRepoListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRepoListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRepoListQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *   },
+ * });
+ */
+export function useRepoListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
+        return ApolloReactHooks.useQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
+      }
+export function useRepoListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
+        }
+export type RepoListQueryHookResult = ReturnType<typeof useRepoListQuery>;
+export type RepoListLazyQueryHookResult = ReturnType<typeof useRepoListLazyQuery>;
+export type RepoListQueryResult = ApolloReactCommon.QueryResult<RepoListQuery, RepoListQueryVariables>;
+export const LoginDocument = gql`
+    query Login {
+  viewer {
+    login
+  }
+}
+    `;
+export type LoginComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<LoginQuery, LoginQueryVariables>, 'query'>;
+
+    export const LoginComponent = (props: LoginComponentProps) => (
+      <ApolloReactComponents.Query<LoginQuery, LoginQueryVariables> query={LoginDocument} {...props} />
+    );
+    
+export type LoginProps<TChildProps = {}> = ApolloReactHoc.DataProps<LoginQuery, LoginQueryVariables> & TChildProps;
+export function withLogin<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  LoginQuery,
+  LoginQueryVariables,
+  LoginProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, LoginQuery, LoginQueryVariables, LoginProps<TChildProps>>(LoginDocument, {
+      alias: 'login',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useLoginQuery__
+ *
+ * To run a query within a React component, call `useLoginQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoginQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLoginQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LoginQuery, LoginQueryVariables>) {
+        return ApolloReactHooks.useQuery<LoginQuery, LoginQueryVariables>(LoginDocument, baseOptions);
+      }
+export function useLoginLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LoginQuery, LoginQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LoginQuery, LoginQueryVariables>(LoginDocument, baseOptions);
+        }
+export type LoginQueryHookResult = ReturnType<typeof useLoginQuery>;
+export type LoginLazyQueryHookResult = ReturnType<typeof useLoginLazyQuery>;
+export type LoginQueryResult = ApolloReactCommon.QueryResult<LoginQuery, LoginQueryVariables>;
