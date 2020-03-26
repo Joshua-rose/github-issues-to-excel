@@ -6,11 +6,11 @@ import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import './index.css';
 import App from './App';
 
-console.log(process.env.GitHubToken)
+console.log(process.env.REACT_APP_GITHUB_TOKEN)
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
   request: (operation) => {
-    const token = process.env.GitHubToken;
+    const token = process.env.REACT_APP_GITHUB_TOKEN;
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : ''
