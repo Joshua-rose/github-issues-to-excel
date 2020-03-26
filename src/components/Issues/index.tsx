@@ -14,7 +14,7 @@ const IssuesContainer = ({owner, repo}: Props) => {
     });
     useEffect(()=>{
         refetch()
-    }, [owner, repo])
+    }, [owner, repo, refetch])
     if (loading) {
         return <div>Loading...</div>;
     }
