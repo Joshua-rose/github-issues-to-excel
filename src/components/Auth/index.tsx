@@ -1,14 +1,20 @@
-import React, {useState} from 'react'
+import React, {useEffect, useContext} from 'react'
 import netlify from 'netlify-auth-providers'
+import {AppContext} from '../../App'
 
 interface Props {
 
 }
 
 const Auth = (props: Props) => {
-    const testForToken = localStorage.getItem('GitHubToken') || '';
-    const [token, setToken] = useState(testForToken)
-
+    // const testForToken = localStorage.getItem('GitHubToken') || '';
+    // const [token, setToken] = useState(testForToken)
+    const context = useContext(AppContext)
+    const {token, setToken} = context
+    useEffect(() => {
+        const localToken = localStorage.getItem('GitHubToken')
+        if (token === '' && localToken) setToken(localToken as string)
+        }, [])
     /**
      * see @link{https://github.com/kentcdodds/react-github-profile/blob/b0c6a4628535fcea32f4f6617efd03f6b29574f4/src/github-client.js#L1}
      */
@@ -21,7 +27,7 @@ const Auth = (props: Props) => {
                 site_id: '6c020ac7-0ac3-4c9a-a2b6-7928880178c4',
             })
             authenticator.authenticate(
-                { provider: 'github', scope: 'public_repo,read:org,read:user' },
+                { provider: 'github', scope: 'public_repo,repo,read:org,read:user' },
                 function (err: any, data: { token: string }) {
                     if (err) {
                         reject(err)
