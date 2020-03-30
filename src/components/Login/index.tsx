@@ -14,7 +14,7 @@ const LoginContainer: React.FC<Props> = ({children}) => {
     }
 
     if (error || !data) {
-        return <div>ERROR big time</div>;
+    return <div>ERROR big time<br />{JSON.stringify(error)}</div>;
     }
     context.setLogin(data.viewer.login);
     return (
