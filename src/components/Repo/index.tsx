@@ -1,4 +1,4 @@
-import React, { useState, useCallback} from 'react'
+import React, { useCallback} from 'react'
 import { useRepoListQuery } from '../../generated/graphql'
 import Repo, { OwnProps} from './Repo'
 
@@ -16,7 +16,7 @@ const RepoListContainer = ({ login, setRepoDetails }: Props) => {
     const handlerRepoDetils = useCallback(
         ({owner, repo}) => {
             setRepoDetails({owner, repo})
-        },[] )
+        }, [setRepoDetails] )
     const { data, error, loading } = useRepoListQuery({
         variables: {
             login: String(login)
