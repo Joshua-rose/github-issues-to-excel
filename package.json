@@ -20,7 +20,8 @@
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "xlsx": "^0.15.6"
   },
   "scripts": {
     "start": "react-scripts start",
