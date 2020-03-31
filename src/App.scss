@@ -1,18 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Righteous&display=swap');
-@import './components/Header/Header.scss';
-@import './components/Repo/Repo.scss';
-@import './components/Issues/Issues.scss';
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Righteous&display=swap");
+@import "./components/Header/Header.scss";
+@import "./components/Repo/Repo.scss";
+@import "./components/Issues/Issues.scss";
 
 .App {
-  h3{
+  h3 {
     text-align: center;
-    font-family: 'Righteous', cursive;
+    font-family: "Righteous", cursive;
     font-size: 2rem;
   }
 
   .main {
     display: flex;
     flex-direction: row;
-     height: calc(100vh - 40px);
+    height: calc(100vh - 40px);
+  }
+  #Header,
+  .IssueList {
+    button {
+      background-color: #2d232e;
+      padding: 0.5rem 1rem;
+      color: #f1f0ea;
+      border: 2px solid #534b52;
+    }
+
+    button:hover {
+      background-color: #534b52;
+      border: 2px solid #2d232e;
+    }
   }
 }

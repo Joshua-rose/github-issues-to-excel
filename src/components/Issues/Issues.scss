@@ -2,7 +2,12 @@
   flex: 3;
   background-color: #f1f0ea;
   overflow: scroll;
-
+  position: relative;
+  .createSheet {
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+  }
   td {
     padding: 8px;
   }
