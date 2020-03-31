@@ -1,6 +1,9 @@
 .Repos {
   flex: 1;
-  background-color: #e0ddcf;
+  background-color: #474448;
+  h3 {
+    color:#f1f0ea;
+  }
   ul {
     list-style: none;
     margin: 0;
@@ -9,6 +12,7 @@
 
   li {
     padding: 0.5rem;
-    border-bottom: 1px solid;
+    color:#f1f0ea;
+    font-family: 'Righteous', cursive;
   }
 }

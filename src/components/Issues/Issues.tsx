@@ -23,8 +23,8 @@ const Issues = ({ data }: Props) => {
                         </thead>
                         <tbody>
                             {
-                                data.repository.issues.nodes?.map(issue => (
-                                    <tr>
+                                data.repository.issues.nodes?.map((issue,i) => (
+                                    <tr key={i}>
                                         {[
                                             issue?.title,
                                             issue?.labels?.nodes?.map(label=>label?.name).join(';'),
@@ -32,7 +32,7 @@ const Issues = ({ data }: Props) => {
                                             issue?.updatedAt,
                                             issue?.number,
                                             issue?.url,
-                                        ].map(value => (<td>{value}</td>))
+                                        ].map((value,j) => (<td key={`row${i}cell${j}`}>{value}</td>))
                                         }
                                     </tr>
                                 ))

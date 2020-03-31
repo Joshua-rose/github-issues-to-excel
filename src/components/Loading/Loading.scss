@@ -1,0 +1,45 @@
+.loading {
+    overflow: hidden;
+    height: calc(100vh - 80px);
+    & > div {
+        position: relative;
+        height: 100%;
+        animation: bounceZoom 2s linear infinite;
+        & > div {
+        position: absolute;
+        background-repeat: repeat;
+        top:0;
+        bottom:0;
+        left:-1000px;
+        right:-1000px;
+        animation: 
+        pan 60s linear infinite;
+    }
+    }
+}
+@keyframes pan {
+  from {
+    transform: translate3d(-1000px, 0, 0)
+  }
+  to {
+    transform: translate3d(1000px, 0, 0)
+  }
+}
+@keyframes bounceZoom {
+    0% {
+        transform: scale(1);
+    }
+    45% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.01);
+    }
+    55% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+    
+}

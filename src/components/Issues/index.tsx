@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import { useIssueListQuery } from '../../generated/graphql'
 import Issues from './Issues'
+import Loading from '../Loading'
 interface Props {
     owner: String;
     repo: String;
@@ -16,7 +17,7 @@ const IssuesContainer = ({owner, repo}: Props) => {
         refetch()
     }, [owner, repo, refetch])
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading className="IssueList" theme="light" />
     }
 
     if (error || !data) {
