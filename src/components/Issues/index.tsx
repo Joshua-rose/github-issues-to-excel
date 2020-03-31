@@ -23,7 +23,7 @@ const IssuesContainer = ({owner, repo}: Props) => {
     if (error || !data) {
         return <div>ERROR</div>;
     }
-    return <Issues data={data}/>
+    return <Issues data={data} repo={repo as string}/>
 }
 
 export default IssuesContainer
