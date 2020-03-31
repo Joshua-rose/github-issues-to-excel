@@ -18,7 +18,7 @@ const LoginContainer: React.FC<Props> = ({children}) => {
     }
     context.setLogin(data.viewer.login);
     return (
-        <div>
+        <div className="main">
             {children}
         </div>
     )

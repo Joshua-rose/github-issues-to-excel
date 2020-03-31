@@ -1,0 +1,13 @@
+.IssueList {
+  flex: 3;
+  background-color: #f1f0ea;
+  overflow: scroll;
+
+  td {
+    padding: 8px;
+  }
+
+  tr {
+    border-bottom: 1px solid;
+  }
+}

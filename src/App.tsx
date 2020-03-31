@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import Issues from './components/Issues'
 import RepoList, { RepoDetails } from './components/Repo'
 import Header from './components/Header'

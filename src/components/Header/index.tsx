@@ -7,7 +7,7 @@ interface Props {
 
 const Header = (props: Props) => {
     return (
-        <div>
+        <div id="Header">
            <Auth></Auth> 
         </div>
     )

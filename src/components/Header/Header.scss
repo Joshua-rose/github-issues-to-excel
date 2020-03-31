@@ -1,0 +1,16 @@
+#Header {
+  background-color: #474448;
+  height: 40px;
+  text-align: right;
+  button {
+    background-color: #2d232e;
+    padding: 0.5rem 1rem;
+    color: #f1f0ea;
+    border: 2px solid #534b52;
+  }
+
+  button:hover {
+    background-color: #534b52;
+    border: 2px solid #2d232e;
+  }
+}
