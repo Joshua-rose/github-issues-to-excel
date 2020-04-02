@@ -28,4 +28,4 @@ export const QUERY_ISSUES = gql`
     }
   }
 }
-`
+`;

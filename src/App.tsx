@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 // import logo from './logo.svg';
 import './App.scss';
-import Issues from './components/Issues'
-import RepoList, { RepoDetails } from './components/Repo'
-import Header from './components/Header'
-import Login from './components/Login'
+import Issues from './components/Issues';
+import RepoList from './components/Repo';
+import { RepoDetails } from './components/Repo/types';
+import AppContext from './utils/AppContext';
+import Header from './components/Header';
+import Login from './components/Login';
 
 
-const AppContext = React.createContext({
-  setAppError: (error:any)=>{},
-  setToken: (tokenString: string) => { },
-  token: '',
-  setLogin: (loginString: string) => { },
-});
 function App() {
-  const initialRepoDetails: RepoDetails = { owner: '', repo: '' }
-  const [repoDetails, setRepoDetails] = useState(initialRepoDetails)
-  const [appError, setAppError] = useState({})
-  const [token, setToken] = useState('')
-  const [login, setLogin] = useState('')
-  
+  const initialRepoDetails: RepoDetails = { owner: '', repo: '' };
+  const [repoDetails, setRepoDetails] = useState(initialRepoDetails);
+  const [appError, setAppError] = useState({});
+  const [token, setToken] = useState('');
+  const [login, setLogin] = useState('');
+  const { owner, repo } = repoDetails;
   return (
     <div className="App">
       <AppContext.Provider value={{
@@ -27,27 +23,27 @@ function App() {
         setToken,
         token,
         setLogin,
-      }}>
+      }}
+      >
 
-      <Header></Header>
-      {token !== ''? (
-        <Login>
-          <RepoList login={login} setRepoDetails={setRepoDetails}></RepoList>
-          {repoDetails.owner && repoDetails.repo && (
-            <Issues {...repoDetails}></Issues>
-            
+        <Header />
+        {token !== '' ? (
+          <Login>
+            <RepoList login={login} setRepoDetails={setRepoDetails} />
+            {repoDetails.owner && repoDetails.repo && (
+            <Issues repo={repo} owner={owner} />
+
             )}
 
-        </Login>
-      ):
-      (
-        <div className="not_logged_in"></div>
+          </Login>
         )
-      }
+          : (
+            <div className="not_logged_in" />
+          )}
       </AppContext.Provider>
     </div>
   );
 }
 
 export default App;
-export {AppContext}
+export { AppContext };
