@@ -1,22 +1,58 @@
 import React from 'react'
+import XLSX from 'xlsx'
 import { IssueListQuery } from '../../generated/graphql'
 
 
 
-
 interface Props {
-    data: IssueListQuery
+    data: IssueListQuery,
+    repo: string,
 }
 const className = 'IssueList'
 
-const Issues = ({data}: Props) => {
+const Issues = ({ data, repo }: Props) => {
+    const createSheet = ()=>{
+        const wb = XLSX.utils.book_new();
+        const sheet = XLSX.utils.table_to_sheet(document.getElementById('data_table'));
+        XLSX.utils.book_append_sheet(wb, sheet, repo );
+        XLSX.writeFile(wb, `${repo} Issues.xlsx`);
+    }
     return (
         <div className={className}>
             <h3>Issues</h3>
-            <ul>
-                {data.repository?.issues && data.repository?.issues.nodes?.map((node, i)=>(<li key={i} >{node?.title}</li>))}
-
-            </ul>
+            {
+                data.repository?.issues ? (
+                    <div>
+                    <table id="data_table">
+                        <thead>
+                            <tr>
+                                <th>Issue Title</th><th>Labels</th><th>Date Opened</th><th>Date Updated</th><th>Id</th><th>url</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data.repository.issues.nodes?.map((issue,i) => (
+                                    <tr key={i}>
+                                        {[
+                                            issue?.title,
+                                            issue?.labels?.nodes?.map(label=>label?.name).join(';'),
+                                            issue?.createdAt,
+                                            issue?.updatedAt,
+                                            issue?.number,
+                                            issue?.url,
+                                        ].map((value,j) => (<td key={`row${i}cell${j}`}>{value}</td>))
+                                        }
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                            <button type="button" className="createSheet" onClick={createSheet}>Export to Excel</button>
+                    </div>
+                ) : (
+                        <div className="no_issues">No Issues found</div>
+                    )
+            }
         </div>
     )
 }
