@@ -13,10 +13,24 @@
   .main {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 95vh;
+  }
+  .footer {
+    height: 5vh;
+    background-color: #666;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color:white;
+    font-size: .5rem;
+    a {
+      text-decoration: none;
+      color: white;
+
+    }
   }
   .repo_not_selected {
-    height: 100vh;
+    height: 95vh;
     display: flex;
     align-items: center;
     padding-left:2rem;
