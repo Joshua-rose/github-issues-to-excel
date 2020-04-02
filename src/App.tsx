@@ -8,7 +8,7 @@ import AppContext from './utils/AppContext';
 import Auth from './components/Auth';
 import Login from './components/Login';
 import logos from './assets/logos.svg';
-import CurvedArrow from './assets/CurvedArrow.png'
+import CurvedArrow from './assets/CurvedArrow.png';
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
             )
               : (
                 <div className="IssueList repo_not_selected">
-                  <img src={CurvedArrow} alt="arrow"/>
+                  <img src={CurvedArrow} alt="arrow" />
                   <p>
                     You must select a repo
 
@@ -60,6 +60,15 @@ function App() {
             </div>
           )}
       </AppContext.Provider>
+      <div className="footer">
+        <div>
+          Some icons made by
+          <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a>
+          {' from '}
+          <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        </div>
+        <div><a href="https://loading.io/pattern/" title="Loading.io">Dust and Point backgrounds by loading.io</a></div>
+      </div>
     </div>
   );
 }
