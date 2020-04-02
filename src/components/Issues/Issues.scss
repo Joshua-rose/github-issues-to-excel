@@ -3,16 +3,21 @@
   background-color: #fff;
   overflow: scroll;
   position: relative;
+  table {
+    border-collapse: collapse;
+    * {
+      border: none;
+    }
+  }
+  tr.odd {
+    background-color: #f1f0ea;
+  }
   .createSheet {
     position: fixed;
-    bottom: 20px;
+    bottom: 7vh;
     right: 25px;
   }
   td {
     padding: 8px;
-  }
-
-  tr {
-    border-bottom: 1px solid;
   }
 }

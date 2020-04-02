@@ -1,18 +1,35 @@
 .Repos {
   flex: 1;
-  background-color: #474448;
+  background-color: #0013BE;
+  overflow: auto;
+  button {
+    background-color: transparent;
+    border: navajowhite;
+    color: white;
+    font-family: "Righteous", cursive;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+    padding: 0.5rem 5px;
+    &:hover {
+      background-color: white;
+      color: black;
+    }
+  }
   h3 {
-    color:#f1f0ea;
+    color: #f1f0ea;
   }
   ul {
     list-style: none;
     margin: 0;
     padding: 10px;
   }
-
+  
   li {
-    padding: 0.5rem;
-    color:#f1f0ea;
-    font-family: 'Righteous', cursive;
+    text-align: left;
+    color: #f1f0ea;
+    font-family: "Righteous", cursive;
+    &.logout {
+      border-top: 2px solid grey;
+    }
   }
 }

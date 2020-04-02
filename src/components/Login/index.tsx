@@ -1,27 +1,39 @@
-import React, {useContext} from 'react'
-import { useLoginQuery } from '../../generated/graphql'
-import { AppContext } from '../../App'
+import React, { useContext, useEffect } from 'react';
+import { useLoginQuery } from '../../generated/graphql';
+import AppContext from '../../utils/AppContext';
 
 interface Props {
-    
+
 }
 
-const LoginContainer: React.FC<Props> = ({children}) => {
-    const context = useContext(AppContext);
-    const { data, loading, error } = useLoginQuery();
-    if (loading) {
-        return <div>Loading... at the top</div>;
+const LoginContainer: React.FC<Props> = ({ children }) => {
+  const context = useContext(AppContext);
+  const { data, loading, error } = useLoginQuery();
+  useEffect(() => {
+    if (data && !loading && !error) {
+      const { setLogin } = context;
+      setLogin(data.viewer.login);
     }
+  }, [data]);
+  if (loading) {
+    return <div>Loading... at the top</div>;
+  }
 
-    if (error || !data) {
-    return <div>ERROR big time<br />{JSON.stringify(error)}</div>;
-    }
-    context.setLogin(data.viewer.login);
+  if (error || !data) {
     return (
-        <div className="main">
-            {children}
-        </div>
-    )
-}
+      <div>
+        ERROR big time
+        <br />
+        {JSON.stringify(error)}
+      </div>
+    );
+  }
 
-export default LoginContainer
+  return (
+    <div className="main">
+      {children}
+    </div>
+  );
+};
+
+export default LoginContainer;

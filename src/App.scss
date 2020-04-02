@@ -13,7 +13,32 @@
   .main {
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 40px);
+    height: 95vh;
+  }
+  .footer {
+    height: 5vh;
+    background-color: #666;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color:white;
+    font-size: .5rem;
+    a {
+      text-decoration: none;
+      color: white;
+
+    }
+  }
+  .repo_not_selected {
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    padding-left:2rem;
+    flex-direction: column;
+    justify-content: center;
+    p {
+      font-size: 2rem;
+    }
   }
   #Header,
   .IssueList {
@@ -28,5 +53,58 @@
       background-color: #534b52;
       border: 2px solid #2d232e;
     }
+  }
+}
+.not_logged_in {
+  background-color: #00000044;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 26px;
+  display: grid;
+
+  grid-template-areas:
+    "chevron login"
+    "chevron button";
+  grid-template-columns: 3fr 1fr;
+  height: 30vh;
+  min-height: 400px;
+  width: 65vw;
+  min-width: 600px;
+  .chevron {
+    clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0% 0%);
+    background-color: blue;
+    grid-area: chevron;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 26px;
+  }
+
+  p {
+    grid-area: login;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .button {
+    grid-area: button;
+    text-align: center;
+    
+      button {
+        background: blue;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 10px;
+      }
+    
   }
 }
