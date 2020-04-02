@@ -23,9 +23,13 @@
     margin: 0;
     padding: 10px;
   }
-
+  
   li {
+    text-align: left;
     color: #f1f0ea;
     font-family: "Righteous", cursive;
+    &.logout {
+      border-top: 2px solid grey;
+    }
   }
 }

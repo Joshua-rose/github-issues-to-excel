@@ -1,6 +1,7 @@
 import React from 'react';
 import { RepoListQuery } from '../../generated/graphql';
 import { RepoDetails } from './types';
+import Auth from '../Auth';
 
 
 export interface OwnProps {
@@ -29,6 +30,7 @@ const Repo = ({ data, setRepoDetails }: Props) => (
           </button>
         </li>
       ))}
+      <li className="logout"><Auth /></li>
     </ul>
   </div>
 );
