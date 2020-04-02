@@ -36,7 +36,7 @@ const Issues = ({ data, repo }: Props) => {
                       <tbody>
                         {
                                 data.repository.issues.nodes?.map((issue, i) => (
-                                  <tr key={i}>
+                                  <tr key={i} className={i % 2 === 0 ? '' : 'odd'}>
                                     {[
                                             issue?.title,
                                             issue?.labels?.nodes?.map((label) => label?.name).join(';'),
