@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Righteous&display=swap");
+@import "./utils/include-media.scss";
 @import "./components/Header/Header.scss";
 @import "./components/Repo/Repo.scss";
 @import "./components/Issues/Issues.scss";
@@ -36,6 +37,21 @@
     padding-left:2rem;
     flex-direction: column;
     justify-content: center;
+    img.point_left {
+        display: none;
+      }
+      img.point_up {
+        display: flex;
+      }
+    @include media('>=tablet') {
+      img.point_left {
+        display: flex;
+      }
+      img.point_up {
+        display: none;
+      }
+    }
+    
     p {
       font-size: 2rem;
     }
@@ -67,17 +83,35 @@
   background-color: white;
   border-radius: 26px;
   display: grid;
-
+  grid-template-areas: "chevron" "login" "button";
+  grid-template-rows: 2fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  width: 100%;
+  min-width: 200px;
+  @include media('<tablet'){
+    img {
+      width:80%;
+    }
+  }
+@include media('>=tablet'){
   grid-template-areas:
     "chevron login"
     "chevron button";
   grid-template-columns: 3fr 1fr;
+     grid-template-rows: 1fr;
+     min-width: 600px;
+     width: 65vw;
+
+    }
   height: 30vh;
   min-height: 400px;
-  width: 65vw;
-  min-width: 600px;
   .chevron {
-    clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0% 0%);
+    clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0 90%, 0 49%, 0% 0%);
+
+    @include media('>tablet'){
+      clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0% 0%);
+
+    }
     background-color: blue;
     grid-area: chevron;
     display: flex;

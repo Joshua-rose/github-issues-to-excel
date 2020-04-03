@@ -9,6 +9,7 @@ import Auth from './components/Auth';
 import Login from './components/Login';
 import logos from './assets/logos.svg';
 import CurvedArrow from './assets/CurvedArrow.png';
+import UpArrow from './assets/UpArrow.png';
 
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
             )
               : (
                 <div className="IssueList repo_not_selected">
-                  <img src={CurvedArrow} alt="arrow" />
+                  <img src={CurvedArrow} alt="arrow" className="point-left" />
+                  <img src={UpArrow} alt="arrow" className="point-up" />
                   <p>
                     You must select a repo
 
