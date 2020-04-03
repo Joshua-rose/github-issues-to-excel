@@ -14,6 +14,9 @@
   .main {
     display: flex;
     flex-direction: row;
+    @include media("<tablet") {
+      flex-direction: column;
+    }
     height: 95vh;
   }
   .footer {
@@ -22,28 +25,27 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    color:white;
-    font-size: .5rem;
+    color: white;
+    font-size: 0.5rem;
     a {
       text-decoration: none;
       color: white;
-
     }
   }
   .repo_not_selected {
     height: 95vh;
     display: flex;
     align-items: center;
-    padding-left:2rem;
+    padding-left: 2rem;
     flex-direction: column;
     justify-content: center;
     img.point_left {
-        display: none;
-      }
-      img.point_up {
-        display: flex;
-      }
-    @include media('>=tablet') {
+      display: none;
+    }
+    img.point_up {
+      display: flex;
+    }
+    @include media(">=tablet") {
       img.point_left {
         display: flex;
       }
@@ -51,7 +53,7 @@
         display: none;
       }
     }
-    
+
     p {
       font-size: 2rem;
     }
@@ -88,29 +90,25 @@
   grid-template-columns: 1fr;
   width: 100%;
   min-width: 200px;
-  @include media('<tablet'){
-    img {
-      width:80%;
-    }
+  img {
+    width: 80%;
   }
-@include media('>=tablet'){
-  grid-template-areas:
-    "chevron login"
-    "chevron button";
-  grid-template-columns: 3fr 1fr;
-     grid-template-rows: 1fr;
-     min-width: 600px;
-     width: 65vw;
-
-    }
+  @include media(">=tablet") {
+    grid-template-areas:
+      "chevron login"
+      "chevron button";
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    min-width: 600px;
+    width: 65vw;
+  }
   height: 30vh;
   min-height: 400px;
   .chevron {
     clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0 90%, 0 49%, 0% 0%);
 
-    @include media('>tablet'){
+    @include media(">tablet") {
       clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 0% 0%);
-
     }
     background-color: blue;
     grid-area: chevron;
@@ -130,15 +128,14 @@
   .button {
     grid-area: button;
     text-align: center;
-    
-      button {
-        background: blue;
-        color: white;
-        font-size: 2rem;
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 10px;
-      }
-    
+
+    button {
+      background: blue;
+      color: white;
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+    }
   }
 }
