@@ -37,8 +37,8 @@ function App() {
             )
               : (
                 <div className="IssueList repo_not_selected">
-                  <img src={CurvedArrow} alt="arrow" className="point-left" />
-                  <img src={UpArrow} alt="arrow" className="point-up" />
+                  <img src={CurvedArrow} alt="arrow" className="point_left" />
+                  <img src={UpArrow} alt="arrow" className="point_up" />
                   <p>
                     You must select a repo
 
