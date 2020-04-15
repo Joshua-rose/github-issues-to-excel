@@ -173,6 +173,7 @@ export type AddPullRequestReviewInput = {
   body?: Maybe<Scalars['String']>;
   event?: Maybe<PullRequestReviewEvent>;
   comments?: Maybe<Array<Maybe<DraftPullRequestReviewComment>>>;
+  threads?: Maybe<Array<Maybe<DraftPullRequestReviewThread>>>;
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
@@ -181,6 +182,23 @@ export type AddPullRequestReviewPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   pullRequestReview?: Maybe<PullRequestReview>;
   reviewEdge?: Maybe<PullRequestReviewEdge>;
+};
+
+export type AddPullRequestReviewThreadInput = {
+  path: Scalars['String'];
+  body: Scalars['String'];
+  pullRequestReviewId: Scalars['ID'];
+  line: Scalars['Int'];
+  side?: Maybe<DiffSide>;
+  startLine?: Maybe<Scalars['Int']>;
+  startSide?: Maybe<DiffSide>;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type AddPullRequestReviewThreadPayload = {
+   __typename?: 'AddPullRequestReviewThreadPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  thread?: Maybe<PullRequestReviewThread>;
 };
 
 export type AddReactionInput = {
@@ -650,6 +668,7 @@ export type Commit = Node & GitObject & Subscribable & UniformResourceLocatable 
   messageHeadline: Scalars['String'];
   messageHeadlineHTML: Scalars['HTML'];
   oid: Scalars['GitObjectID'];
+  onBehalfOf?: Maybe<Organization>;
   parents: CommitConnection;
   pushedDate?: Maybe<Scalars['DateTime']>;
   repository: Repository;
@@ -733,7 +752,7 @@ export type CommitAuthor = {
   emails?: Maybe<Array<Scalars['String']>>;
 };
 
-export type CommitComment = Node & Comment & Deletable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
+export type CommitComment = Node & Comment & Deletable & Minimizable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
    __typename?: 'CommitComment';
   author?: Maybe<Actor>;
   authorAssociation: CommentAuthorAssociation;
@@ -1081,6 +1100,16 @@ export type ConvertProjectCardNoteToIssuePayload = {
    __typename?: 'ConvertProjectCardNoteToIssuePayload';
   clientMutationId?: Maybe<Scalars['String']>;
   projectCard?: Maybe<ProjectCard>;
+};
+
+export type ConvertToDraftEvent = Node & UniformResourceLocatable & {
+   __typename?: 'ConvertToDraftEvent';
+  actor?: Maybe<Actor>;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  pullRequest: PullRequest;
+  resourcePath: Scalars['URI'];
+  url: Scalars['URI'];
 };
 
 export type CreateBranchProtectionRuleInput = {
@@ -1602,7 +1631,7 @@ export type Deployment = Node & {
   commit?: Maybe<Commit>;
   commitOid: Scalars['String'];
   createdAt: Scalars['DateTime'];
-  creator?: Maybe<Actor>;
+  creator: Actor;
   databaseId?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
   environment?: Maybe<Scalars['String']>;
@@ -1674,7 +1703,7 @@ export enum DeploymentState {
 export type DeploymentStatus = Node & {
    __typename?: 'DeploymentStatus';
   createdAt: Scalars['DateTime'];
-  creator?: Maybe<Actor>;
+  creator: Actor;
   deployment: Deployment;
   description?: Maybe<Scalars['String']>;
   environmentUrl?: Maybe<Scalars['URI']>;
@@ -1708,6 +1737,11 @@ export enum DeploymentStatusState {
   InProgress = 'IN_PROGRESS'
 }
 
+export enum DiffSide {
+  Left = 'LEFT',
+  Right = 'RIGHT'
+}
+
 export type DisconnectedEvent = Node & {
    __typename?: 'DisconnectedEvent';
   actor?: Maybe<Actor>;
@@ -1733,6 +1767,15 @@ export type DismissPullRequestReviewPayload = {
 export type DraftPullRequestReviewComment = {
   path: Scalars['String'];
   position: Scalars['Int'];
+  body: Scalars['String'];
+};
+
+export type DraftPullRequestReviewThread = {
+  path: Scalars['String'];
+  line: Scalars['Int'];
+  side?: Maybe<DiffSide>;
+  startLine?: Maybe<Scalars['Int']>;
+  startSide?: Maybe<DiffSide>;
   body: Scalars['String'];
 };
 
@@ -2701,7 +2744,7 @@ export type GistStargazersArgs = {
   orderBy?: Maybe<StarOrder>;
 };
 
-export type GistComment = Node & Comment & Deletable & Updatable & UpdatableComment & {
+export type GistComment = Node & Comment & Deletable & Minimizable & Updatable & UpdatableComment & {
    __typename?: 'GistComment';
   author?: Maybe<Actor>;
   authorAssociation: CommentAuthorAssociation;
@@ -3111,7 +3154,7 @@ export type IssueUserContentEditsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type IssueComment = Node & Comment & Deletable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
+export type IssueComment = Node & Comment & Deletable & Minimizable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
    __typename?: 'IssueComment';
   author?: Maybe<Actor>;
   authorAssociation: CommentAuthorAssociation;
@@ -3870,6 +3913,24 @@ export enum MilestoneState {
   Closed = 'CLOSED'
 }
 
+export type Minimizable = {
+  isMinimized: Scalars['Boolean'];
+  minimizedReason?: Maybe<Scalars['String']>;
+  viewerCanMinimize: Scalars['Boolean'];
+};
+
+export type MinimizeCommentInput = {
+  subjectId: Scalars['ID'];
+  classifier: ReportedContentClassifiers;
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type MinimizeCommentPayload = {
+   __typename?: 'MinimizeCommentPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  minimizedComment?: Maybe<Minimizable>;
+};
+
 export type MovedColumnsInProjectEvent = Node & {
    __typename?: 'MovedColumnsInProjectEvent';
   actor?: Maybe<Actor>;
@@ -3914,6 +3975,7 @@ export type Mutation = {
   addProjectColumn?: Maybe<AddProjectColumnPayload>;
   addPullRequestReview?: Maybe<AddPullRequestReviewPayload>;
   addPullRequestReviewComment?: Maybe<AddPullRequestReviewCommentPayload>;
+  addPullRequestReviewThread?: Maybe<AddPullRequestReviewThreadPayload>;
   addReaction?: Maybe<AddReactionPayload>;
   addStar?: Maybe<AddStarPayload>;
   archiveRepository?: Maybe<ArchiveRepositoryPayload>;
@@ -3957,6 +4019,7 @@ export type Mutation = {
   markPullRequestReadyForReview?: Maybe<MarkPullRequestReadyForReviewPayload>;
   mergeBranch?: Maybe<MergeBranchPayload>;
   mergePullRequest?: Maybe<MergePullRequestPayload>;
+  minimizeComment?: Maybe<MinimizeCommentPayload>;
   moveProjectCard?: Maybe<MoveProjectCardPayload>;
   moveProjectColumn?: Maybe<MoveProjectColumnPayload>;
   regenerateEnterpriseIdentityProviderRecoveryCodes?: Maybe<RegenerateEnterpriseIdentityProviderRecoveryCodesPayload>;
@@ -3980,6 +4043,7 @@ export type Mutation = {
   unlinkRepositoryFromProject?: Maybe<UnlinkRepositoryFromProjectPayload>;
   unlockLockable?: Maybe<UnlockLockablePayload>;
   unmarkIssueAsDuplicate?: Maybe<UnmarkIssueAsDuplicatePayload>;
+  unminimizeComment?: Maybe<UnminimizeCommentPayload>;
   unresolveReviewThread?: Maybe<UnresolveReviewThreadPayload>;
   updateBranchProtectionRule?: Maybe<UpdateBranchProtectionRulePayload>;
   updateEnterpriseActionExecutionCapabilitySetting?: Maybe<UpdateEnterpriseActionExecutionCapabilitySettingPayload>;
@@ -4060,6 +4124,11 @@ export type MutationAddPullRequestReviewArgs = {
 
 export type MutationAddPullRequestReviewCommentArgs = {
   input: AddPullRequestReviewCommentInput;
+};
+
+
+export type MutationAddPullRequestReviewThreadArgs = {
+  input: AddPullRequestReviewThreadInput;
 };
 
 
@@ -4278,6 +4347,11 @@ export type MutationMergePullRequestArgs = {
 };
 
 
+export type MutationMinimizeCommentArgs = {
+  input: MinimizeCommentInput;
+};
+
+
 export type MutationMoveProjectCardArgs = {
   input: MoveProjectCardInput;
 };
@@ -4390,6 +4464,11 @@ export type MutationUnlockLockableArgs = {
 
 export type MutationUnmarkIssueAsDuplicateArgs = {
   input: UnmarkIssueAsDuplicateInput;
+};
+
+
+export type MutationUnminimizeCommentArgs = {
+  input: UnminimizeCommentInput;
 };
 
 
@@ -6497,7 +6576,7 @@ export type PullRequestReviewUserContentEditsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type PullRequestReviewComment = Node & Comment & Deletable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
+export type PullRequestReviewComment = Node & Comment & Deletable & Minimizable & Updatable & UpdatableComment & Reactable & RepositoryNode & {
    __typename?: 'PullRequestReviewComment';
   author?: Maybe<Actor>;
   authorAssociation: CommentAuthorAssociation;
@@ -6631,11 +6710,17 @@ export enum PullRequestReviewState {
 export type PullRequestReviewThread = Node & {
    __typename?: 'PullRequestReviewThread';
   comments: PullRequestReviewCommentConnection;
+  diffSide: DiffSide;
   id: Scalars['ID'];
   isResolved: Scalars['Boolean'];
+  line?: Maybe<Scalars['Int']>;
+  originalLine?: Maybe<Scalars['Int']>;
+  originalStartLine?: Maybe<Scalars['Int']>;
   pullRequest: PullRequest;
   repository: Repository;
   resolvedBy?: Maybe<User>;
+  startDiffSide?: Maybe<DiffSide>;
+  startLine?: Maybe<Scalars['Int']>;
   viewerCanResolve: Scalars['Boolean'];
   viewerCanUnresolve: Scalars['Boolean'];
 };
@@ -6692,7 +6777,7 @@ export type PullRequestTimelineItemEdge = {
   node?: Maybe<PullRequestTimelineItem>;
 };
 
-export type PullRequestTimelineItems = AddedToProjectEvent | AssignedEvent | BaseRefChangedEvent | BaseRefForcePushedEvent | ClosedEvent | CommentDeletedEvent | ConnectedEvent | ConvertedNoteToIssueEvent | CrossReferencedEvent | DemilestonedEvent | DeployedEvent | DeploymentEnvironmentChangedEvent | DisconnectedEvent | HeadRefDeletedEvent | HeadRefForcePushedEvent | HeadRefRestoredEvent | IssueComment | LabeledEvent | LockedEvent | MarkedAsDuplicateEvent | MentionedEvent | MergedEvent | MilestonedEvent | MovedColumnsInProjectEvent | PinnedEvent | PullRequestCommit | PullRequestCommitCommentThread | PullRequestReview | PullRequestReviewThread | PullRequestRevisionMarker | ReadyForReviewEvent | ReferencedEvent | RemovedFromProjectEvent | RenamedTitleEvent | ReopenedEvent | ReviewDismissedEvent | ReviewRequestRemovedEvent | ReviewRequestedEvent | SubscribedEvent | TransferredEvent | UnassignedEvent | UnlabeledEvent | UnlockedEvent | UnmarkedAsDuplicateEvent | UnpinnedEvent | UnsubscribedEvent | UserBlockedEvent;
+export type PullRequestTimelineItems = AddedToProjectEvent | AssignedEvent | BaseRefChangedEvent | BaseRefForcePushedEvent | ClosedEvent | CommentDeletedEvent | ConnectedEvent | ConvertToDraftEvent | ConvertedNoteToIssueEvent | CrossReferencedEvent | DemilestonedEvent | DeployedEvent | DeploymentEnvironmentChangedEvent | DisconnectedEvent | HeadRefDeletedEvent | HeadRefForcePushedEvent | HeadRefRestoredEvent | IssueComment | LabeledEvent | LockedEvent | MarkedAsDuplicateEvent | MentionedEvent | MergedEvent | MilestonedEvent | MovedColumnsInProjectEvent | PinnedEvent | PullRequestCommit | PullRequestCommitCommentThread | PullRequestReview | PullRequestReviewThread | PullRequestRevisionMarker | ReadyForReviewEvent | ReferencedEvent | RemovedFromProjectEvent | RenamedTitleEvent | ReopenedEvent | ReviewDismissedEvent | ReviewRequestRemovedEvent | ReviewRequestedEvent | SubscribedEvent | TransferredEvent | UnassignedEvent | UnlabeledEvent | UnlockedEvent | UnmarkedAsDuplicateEvent | UnpinnedEvent | UnsubscribedEvent | UserBlockedEvent;
 
 export type PullRequestTimelineItemsConnection = {
    __typename?: 'PullRequestTimelineItemsConnection';
@@ -6729,6 +6814,7 @@ export enum PullRequestTimelineItemsItemType {
   ReviewRequestedEvent = 'REVIEW_REQUESTED_EVENT',
   ReviewRequestRemovedEvent = 'REVIEW_REQUEST_REMOVED_EVENT',
   ReadyForReviewEvent = 'READY_FOR_REVIEW_EVENT',
+  ConvertToDraftEvent = 'CONVERT_TO_DRAFT_EVENT',
   IssueComment = 'ISSUE_COMMENT',
   CrossReferencedEvent = 'CROSS_REFERENCED_EVENT',
   AddedToProjectEvent = 'ADDED_TO_PROJECT_EVENT',
@@ -8322,6 +8408,15 @@ export type RepoRemoveTopicAuditEntry = Node & AuditEntry & RepositoryAuditEntry
   userUrl?: Maybe<Scalars['URI']>;
 };
 
+export enum ReportedContentClassifiers {
+  Spam = 'SPAM',
+  Abuse = 'ABUSE',
+  OffTopic = 'OFF_TOPIC',
+  Outdated = 'OUTDATED',
+  Duplicate = 'DUPLICATE',
+  Resolved = 'RESOLVED'
+}
+
 export type Repository = Node & ProjectOwner & RegistryPackageOwner & RegistryPackageSearch & Subscribable & Starrable & UniformResourceLocatable & RepositoryInfo & {
    __typename?: 'Repository';
   assignableUsers: UserConnection;
@@ -9539,6 +9634,7 @@ export type StarrableStargazersArgs = {
 export type StarredRepositoryConnection = {
    __typename?: 'StarredRepositoryConnection';
   edges?: Maybe<Array<Maybe<StarredRepositoryEdge>>>;
+  isOverLimit: Scalars['Boolean'];
   nodes?: Maybe<Array<Maybe<Repository>>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
@@ -10456,6 +10552,17 @@ export type UnmarkIssueAsDuplicatePayload = {
   duplicate?: Maybe<IssueOrPullRequest>;
 };
 
+export type UnminimizeCommentInput = {
+  subjectId: Scalars['ID'];
+  clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type UnminimizeCommentPayload = {
+   __typename?: 'UnminimizeCommentPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  unminimizedComment?: Maybe<Minimizable>;
+};
+
 export type UnpinnedEvent = Node & {
    __typename?: 'UnpinnedEvent';
   actor?: Maybe<Actor>;
@@ -11297,12 +11404,12 @@ export type UserSponsorshipsAsSponsorArgs = {
 
 
 export type UserStarredRepositoriesArgs = {
-  ownedByViewer?: Maybe<Scalars['Boolean']>;
-  orderBy?: Maybe<StarOrder>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  ownedByViewer?: Maybe<Scalars['Boolean']>;
+  orderBy?: Maybe<StarOrder>;
 };
 
 
@@ -11461,6 +11568,17 @@ export type IssueListQuery = (
   )> }
 );
 
+export type LoginQueryVariables = {};
+
+
+export type LoginQuery = (
+  { __typename?: 'Query' }
+  & { viewer: (
+    { __typename?: 'User' }
+    & Pick<User, 'login'>
+  ) }
+);
+
 export type RepoListQueryVariables = {
   login: Scalars['String'];
 };
@@ -11474,7 +11592,7 @@ export type RepoListQuery = (
       { __typename?: 'RepositoryConnection' }
       & { nodes?: Maybe<Array<Maybe<(
         { __typename?: 'Repository' }
-        & Pick<Repository, 'name'>
+        & Pick<Repository, 'name' | 'isPrivate'>
         & { owner: (
           { __typename?: 'Organization' }
           & Pick<Organization, 'login'>
@@ -11485,17 +11603,6 @@ export type RepoListQuery = (
       )>>> }
     ) }
   )> }
-);
-
-export type LoginQueryVariables = {};
-
-
-export type LoginQuery = (
-  { __typename?: 'Query' }
-  & { viewer: (
-    { __typename?: 'User' }
-    & Pick<User, 'login'>
-  ) }
 );
 
 
@@ -11571,63 +11678,6 @@ export function useIssueListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type IssueListQueryHookResult = ReturnType<typeof useIssueListQuery>;
 export type IssueListLazyQueryHookResult = ReturnType<typeof useIssueListLazyQuery>;
 export type IssueListQueryResult = ApolloReactCommon.QueryResult<IssueListQuery, IssueListQueryVariables>;
-export const RepoListDocument = gql`
-    query RepoList($login: String!) {
-  user(login: $login) {
-    repositories(first: 100) {
-      nodes {
-        name
-        owner {
-          login
-        }
-      }
-    }
-  }
-}
-    `;
-export type RepoListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<RepoListQuery, RepoListQueryVariables>, 'query'> & ({ variables: RepoListQueryVariables; skip?: boolean; } | { skip: boolean; });
-
-    export const RepoListComponent = (props: RepoListComponentProps) => (
-      <ApolloReactComponents.Query<RepoListQuery, RepoListQueryVariables> query={RepoListDocument} {...props} />
-    );
-    
-export type RepoListProps<TChildProps = {}> = ApolloReactHoc.DataProps<RepoListQuery, RepoListQueryVariables> & TChildProps;
-export function withRepoList<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  RepoListQuery,
-  RepoListQueryVariables,
-  RepoListProps<TChildProps>>) {
-    return ApolloReactHoc.withQuery<TProps, RepoListQuery, RepoListQueryVariables, RepoListProps<TChildProps>>(RepoListDocument, {
-      alias: 'repoList',
-      ...operationOptions
-    });
-};
-
-/**
- * __useRepoListQuery__
- *
- * To run a query within a React component, call `useRepoListQuery` and pass it any options that fit your needs.
- * When your component renders, `useRepoListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRepoListQuery({
- *   variables: {
- *      login: // value for 'login'
- *   },
- * });
- */
-export function useRepoListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
-        return ApolloReactHooks.useQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
-      }
-export function useRepoListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
-        }
-export type RepoListQueryHookResult = ReturnType<typeof useRepoListQuery>;
-export type RepoListLazyQueryHookResult = ReturnType<typeof useRepoListLazyQuery>;
-export type RepoListQueryResult = ApolloReactCommon.QueryResult<RepoListQuery, RepoListQueryVariables>;
 export const LoginDocument = gql`
     query Login {
   viewer {
@@ -11677,3 +11727,61 @@ export function useLoginLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOp
 export type LoginQueryHookResult = ReturnType<typeof useLoginQuery>;
 export type LoginLazyQueryHookResult = ReturnType<typeof useLoginLazyQuery>;
 export type LoginQueryResult = ApolloReactCommon.QueryResult<LoginQuery, LoginQueryVariables>;
+export const RepoListDocument = gql`
+    query RepoList($login: String!) {
+  user(login: $login) {
+    repositories(first: 100) {
+      nodes {
+        name
+        owner {
+          login
+        }
+        isPrivate
+      }
+    }
+  }
+}
+    `;
+export type RepoListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<RepoListQuery, RepoListQueryVariables>, 'query'> & ({ variables: RepoListQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const RepoListComponent = (props: RepoListComponentProps) => (
+      <ApolloReactComponents.Query<RepoListQuery, RepoListQueryVariables> query={RepoListDocument} {...props} />
+    );
+    
+export type RepoListProps<TChildProps = {}> = ApolloReactHoc.DataProps<RepoListQuery, RepoListQueryVariables> & TChildProps;
+export function withRepoList<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  RepoListQuery,
+  RepoListQueryVariables,
+  RepoListProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, RepoListQuery, RepoListQueryVariables, RepoListProps<TChildProps>>(RepoListDocument, {
+      alias: 'repoList',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useRepoListQuery__
+ *
+ * To run a query within a React component, call `useRepoListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRepoListQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRepoListQuery({
+ *   variables: {
+ *      login: // value for 'login'
+ *   },
+ * });
+ */
+export function useRepoListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
+        return ApolloReactHooks.useQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
+      }
+export function useRepoListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RepoListQuery, RepoListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<RepoListQuery, RepoListQueryVariables>(RepoListDocument, baseOptions);
+        }
+export type RepoListQueryHookResult = ReturnType<typeof useRepoListQuery>;
+export type RepoListLazyQueryHookResult = ReturnType<typeof useRepoListLazyQuery>;
+export type RepoListQueryResult = ApolloReactCommon.QueryResult<RepoListQuery, RepoListQueryVariables>;
