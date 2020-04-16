@@ -20,12 +20,14 @@ const Repo = ({ data, setRepoDetails }: Props) => (
         <li
           key={i}
         >
+          
           <button
             type="button"
             onClick={() => {
               setRepoDetails({ owner: repository?.owner.login || '', repo: repository?.name || '' });
             }}
           >
+            <Octicon icon={repository?.isPrivate ? Lock : RepoIcon} />
             {repository?.name}
           </button>
         </li>
