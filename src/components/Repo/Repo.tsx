@@ -1,4 +1,5 @@
 import React from 'react';
+import Octicon, { Repo as RepoIcon, Lock } from '@primer/octicons-react';
 import { RepoListQuery } from '../../generated/graphql';
 import { RepoDetails } from './types';
 import Auth from '../Auth';
