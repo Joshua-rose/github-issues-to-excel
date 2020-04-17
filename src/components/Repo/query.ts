@@ -9,6 +9,7 @@ export const REPO_QUERY = gql`
                     owner {
                         login
                     }
+                    isPrivate
                 }
             }
         }

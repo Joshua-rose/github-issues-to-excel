@@ -1,8 +1,11 @@
 .Repos {
   flex: 1;
   background-color: #0013BE;
-  overflow: auto;
+  overflow-x:hidden ;
   button {
+    svg.octicon {
+      margin-right: 0.7rem;
+    }
     background-color: transparent;
     border: navajowhite;
     color: white;
@@ -10,6 +13,11 @@
     font-size: 1rem;
     transition: all 0.2s ease-in-out;
     padding: 0.5rem 5px;
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    white-space: nowrap;
     &:hover {
       background-color: white;
       color: black;
@@ -22,12 +30,12 @@
     list-style: none;
     margin: 0;
     padding: 10px;
+    width:100%;
   }
   
   li {
-    text-align: left;
     color: #f1f0ea;
-    font-family: "Righteous", cursive;
+    font-family: "Playfair Display SC", serif;
     &.logout {
       border-top: 2px solid grey;
     }
