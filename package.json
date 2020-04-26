@@ -51,7 +51,7 @@
     "@graphql-codegen/fragment-matcher": "1.13.1",
     "@graphql-codegen/introspection": "1.13.1",
     "@graphql-codegen/typescript": "1.13.1",
-    "@graphql-codegen/typescript-operations": "1.13.1",
+    "@graphql-codegen/typescript-operations": "1.13.3",
     "@graphql-codegen/typescript-react-apollo": "1.13.3",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.29.0",
