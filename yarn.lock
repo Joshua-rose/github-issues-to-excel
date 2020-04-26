@@ -1119,12 +1119,13 @@
     "@graphql-toolkit/schema-merging" "~0.10.4"
     tslib "~1.11.1"
 
-"@graphql-codegen/fragment-matcher@1.13.1":
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/fragment-matcher/-/fragment-matcher-1.13.1.tgz#e0c25e2530a5d2e2283e3dc6755499c0b36337af"
-  integrity sha512-xpUUaN7ApAQeL6UCTa0yqERZRoEFLkm2Qu2SNp8PXjGmRFdBKmMTG7jwAwQ2uZa39Dmlmw/KCNSxHedkHXNiuA==
+"@graphql-codegen/fragment-matcher@1.13.3":
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/fragment-matcher/-/fragment-matcher-1.13.3.tgz#c7e18b45b475009a080bcfea6364c280c1c50c1b"
+  integrity sha512-Q95SGLsmr4Mvy9VN+C+U2MG0FZAsSLDO9tXVT0wEbmO82bmuBT+jSlBb35XImYEtyxtvd5U4M9rB0XY4iJuprw==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "1.13.1"
+    "@graphql-codegen/plugin-helpers" "1.13.3"
+    tslib "~1.11.1"
 
 "@graphql-codegen/introspection@1.13.1":
   version "1.13.1"
