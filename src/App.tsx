@@ -12,7 +12,8 @@ import Acknowledgements from './pages/Acknowledgements';
 
 function App() {
   const [appError, setAppError] = useState({});
-  const [token, setToken] = useState('');
+  const localToken = localStorage.getItem('GitHubToken');
+  const [token, setToken] = useState(localToken || '');
   const [login, setLogin] = useState('');
 
   return (
