@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Netlify from 'netlify-auth-providers';
 import AppContext from '../../utils/AppContext';
 
@@ -6,7 +7,7 @@ interface Props {
 
 }
 
-const Auth = () => {
+const Auth = ({ history }: RouteComponentProps) => {
   // const testForToken = localStorage.getItem('GitHubToken') || '';
   // const [token, setToken] = useState(testForToken)
   const context = useContext(AppContext);
@@ -42,6 +43,7 @@ const Auth = () => {
       const data = await authWithGitHub();
       if (data) setToken(data.token);
       localStorage.setItem('GitHubToken', data.token);
+      history.push('/');
     };
     const logout = () => {
       setToken('');
