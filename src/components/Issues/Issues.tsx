@@ -30,6 +30,7 @@ const Issues = ({ data, repo }: Props) => {
                           <th>Date Opened</th>
                           <th>Date Updated</th>
                           <th>Id</th>
+                          <th>Closed</th>
                           <th>url</th>
                         </tr>
                       </thead>
@@ -43,6 +44,7 @@ const Issues = ({ data, repo }: Props) => {
                                             issue?.createdAt,
                                             issue?.updatedAt,
                                             issue?.number,
+                                            issue?.closed ? 'Closed' : '',
                                             issue?.url,
                                     ].map((value, j) => (<td key={`row${i}cell${j}`}>{value}</td>))}
                                   </tr>

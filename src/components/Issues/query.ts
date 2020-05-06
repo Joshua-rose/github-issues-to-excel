@@ -11,6 +11,7 @@ export const QUERY_ISSUES = gql`
           updatedAt
           url
           title
+          closed
           labels(first: 100) {
             nodes {
               description
