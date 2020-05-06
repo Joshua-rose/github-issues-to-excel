@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Righteous&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@900&display=swap");
 @import "./utils/include-media.scss";
-@import "./components/Header/Header.scss";
+// @import "./components/Header/Header.scss";
 @import "./components/Repo/Repo.scss";
 @import "./components/Issues/Issues.scss";
 
@@ -138,5 +138,25 @@
       border: none;
       border-radius: 10px;
     }
+  }
+}
+
+.settings {
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  z-index: 999;
+  ul {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: none;
+    &.show {
+      display: block;
+    }
+  }
+  input[type="image"] {
+    width: 20px;
+    position: absolute;
+    right: 0;
   }
 }
