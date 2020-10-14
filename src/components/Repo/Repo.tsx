@@ -1,5 +1,5 @@
 import React from 'react';
-import Octicon, { Repo as RepoIcon, Lock } from '@primer/octicons-react';
+import Octicon, { RepoIcon, LockIcon } from '@primer/octicons-react';
 import { RepoListQuery } from '../../generated/graphql';
 import { RepoDetails } from './types';
 import Auth from '../Auth';
@@ -28,7 +28,7 @@ const Repo = ({ data, setRepoDetails }: Props) => (
               setRepoDetails({ owner: repository?.owner.login || '', repo: repository?.name || '' });
             }}
           >
-            <Octicon icon={repository?.isPrivate ? Lock : RepoIcon} />
+            <Octicon icon={repository?.isPrivate ? LockIcon : RepoIcon} />
             {repository?.name}
           </button>
         </li>
