@@ -15,7 +15,7 @@ import UpArrow from './assets/UpArrow.png';
 function App() {
   const initialRepoDetails: RepoDetails = { owner: '', repo: '' };
   const [repoDetails, setRepoDetails] = useState(initialRepoDetails);
-  const [appError, setAppError] = useState({});
+  const [appError, setAppError] = useState({} as any);
   const [token, setToken] = useState('');
   const [login, setLogin] = useState('');
   const { owner, repo } = repoDetails;
@@ -28,6 +28,7 @@ function App() {
         setLogin,
       }}
       >
+        {appError && (<div className="Error">{appError.message || 'Error has occured' }</div>)}
         {token !== '' ? (
           <Login>
             <RepoList login={login} setRepoDetails={setRepoDetails} />
