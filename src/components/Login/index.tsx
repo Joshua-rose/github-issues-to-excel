@@ -14,7 +14,7 @@ const LoginContainer: React.FC<Props> = ({ children }) => {
       const { setLogin } = context;
       setLogin(data.viewer.login);
     }
-  }, [data]);
+  }, [data, context, error, loading]);
   if (loading) {
     return <div>Loading... at the top</div>;
   }
