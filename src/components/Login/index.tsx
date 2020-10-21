@@ -8,6 +8,11 @@ interface Props {
 
 const LoginContainer: React.FC<Props> = ({ children }) => {
   const context = useContext(AppContext);
+  const logout = () => {
+    const { setToken } = context;
+    setToken('');
+    localStorage.removeItem('GitHubToken');
+  };
   const { data, loading, error } = useLoginQuery();
   useEffect(() => {
     if (data && !loading && !error) {
@@ -20,6 +25,15 @@ const LoginContainer: React.FC<Props> = ({ children }) => {
   }
 
   if (error || !data) {
+    if ((error?.networkError as any)?.statusCode === 401) {
+      return (
+        <div>
+          Error occured with authentication. Please log in again.
+          <br />
+          <button type="button" onClick={logout}>Logout</button>
+        </div>
+      );
+    }
     return (
       <div>
         ERROR big time
